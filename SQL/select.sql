@@ -22,3 +22,6 @@ END;
 SELECT * FROM Hero;
 SELECT * FROM Item;
 SELECT * FROM Player;
+SELECT * FROM Hero_Played;
+SELECT * FROM match_game;
+SELECT * FROM team;
