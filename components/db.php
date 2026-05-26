@@ -3,6 +3,10 @@ $user    = "C##dota_app";
 $pass    = "qwerty123";
 $host    = "localhost/ORCL";
 $db_conn = oci_connect($user, $pass, $host);
+/**
+ * CREATE USER C##dota_app IDENTIFIED BY qwerty123;
+ * GRANT CONNECT TO C##dota_app;
+ */
 
 if (!$db_conn) {
     $oci_err = oci_error();

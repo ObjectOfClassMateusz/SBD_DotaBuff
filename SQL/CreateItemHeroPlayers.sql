@@ -79,13 +79,6 @@ CREATE TABLE Player (
 -- ============================================================
 --  ITEMS  (individual INSERTs — avoids sequence collision)
 -- ============================================================
--- Starting / Consumables
-INSERT INTO Item (name) VALUES ('Tango');
-INSERT INTO Item (name) VALUES ('Healing Salve');
-INSERT INTO Item (name) VALUES ('Clarity');
-INSERT INTO Item (name) VALUES ('Faerie Fire');
-INSERT INTO Item (name) VALUES ('Smoke of Deceit');
-INSERT INTO Item (name) VALUES ('Town Portal Scroll');
 -- Basic stat components
 INSERT INTO Item (name) VALUES ('Iron Branch');
 INSERT INTO Item (name) VALUES ('Gauntlets of Strength');
@@ -225,7 +218,6 @@ INSERT INTO Item (name) VALUES ('Overwhelming Blink');
 INSERT INTO Item (name) VALUES ('Swift Blink');
 INSERT INTO Item (name) VALUES ('Arcane Blink');
 
-
 -- ============================================================
 --  HEROES  (individual INSERTs — all 4 attribute classes)
 -- ============================================================
@@ -360,59 +352,52 @@ INSERT INTO Hero (name, primary_attribute) VALUES ('Ringmaster','Universal');
 --  PLAYERS  (40 players, 5 per rank bracket)
 -- ============================================================
 -- Herald
-INSERT INTO Player VALUES (76561198000111001,'NightWatchman_H','CHINA',  DATE '2012-03-15','Herald');
-INSERT INTO Player VALUES (76561198000111002,'IronGrip42','CHINA',       DATE '2015-07-22','Herald');
-INSERT INTO Player VALUES (76561198000111003,'NewbieSlayer99','W-EUROPE',    DATE '2019-11-05','Herald');
-INSERT INTO Player VALUES (76561198000111004,'CluelessCarry','CHINA',    DATE '2020-02-14','Herald');
-INSERT INTO Player VALUES (76561198000111005,'SupportGod_NOT','W-EUROPE',   DATE '2021-06-30','Herald');
+INSERT INTO Player VALUES (76561198000111001,'9Pandas.Solo','CHINA',  DATE '2012-03-15','Herald');
+INSERT INTO Player VALUES (76561198000111002,'9Pandas.RAMZES666','CHINA',       DATE '2015-07-22','Herald');
+INSERT INTO Player VALUES (76561198000111003,'Aui_2000','W-EUROPE',    DATE '2019-11-05','Herald');
+INSERT INTO Player VALUES (76561198000111004,'ALWAYSWANNAFLY','CHINA',    DATE '2020-02-14','Herald');
+INSERT INTO Player VALUES (76561198000111005,'AR.Somnus','W-EUROPE',   DATE '2021-06-30','Herald');
 -- Guardian
-INSERT INTO Player VALUES (76561198000222001,'GankOrFeed',  'W-EUROPE',     DATE '2013-09-10','Guardian');
-INSERT INTO Player VALUES (76561198000222002,'MapAwareness0','W-EUROPE',    DATE '2016-04-18','Guardian');
-INSERT INTO Player VALUES (76561198000222003,'TriHardPudge', 'W-EUROPE',    DATE '2018-08-27','Guardian');
-INSERT INTO Player VALUES (76561198000222004,'LastHitKing_Not','W-EUROPE',  DATE '2017-12-01','Guardian');
-INSERT INTO Player VALUES (76561198000222005,'TpScrollWhere', 'W-EUROPE',   DATE '2020-05-20','Guardian');
+INSERT INTO Player VALUES (76561198000222001,'Alliance.Handsken',  'W-EUROPE',     DATE '2013-09-10','Guardian');
+INSERT INTO Player VALUES (76561198000222002,'Alliance.Limmp','W-EUROPE',    DATE '2016-04-18','Guardian');
+INSERT INTO Player VALUES (76561198000222003,'Alliance.Loda', 'W-EUROPE',    DATE '2018-08-27','Guardian');
+INSERT INTO Player VALUES (76561198000222004,'Alliance.Nikobaby','W-EUROPE',  DATE '2017-12-01','Guardian');
+INSERT INTO Player VALUES (76561198000222005,'Alliance.s4', 'W-EUROPE',   DATE '2020-05-20','Guardian');
 -- Crusader
-INSERT INTO Player VALUES (76561198000333001,'SmokeMasterX',  'N-AMERICA',   DATE '2014-01-11','Crusader');
-INSERT INTO Player VALUES (76561198000333002,'WardsBuyerRare','N-AMERICA',   DATE '2015-03-22','Crusader');
+INSERT INTO Player VALUES (76561198000333001,'DeMoN',  'N-AMERICA',   DATE '2014-01-11','Crusader');
+INSERT INTO Player VALUES (76561198000333002,'Fwosh','N-AMERICA',   DATE '2015-03-22','Crusader');
 INSERT INTO Player VALUES (76561198000333003,'RoamingPhantom','N-AMERICA',   DATE '2016-10-09','Crusader');
-INSERT INTO Player VALUES (76561198000333004,'BKBorDie',    'N-AMERICA',     DATE '2018-02-14','Crusader');
+INSERT INTO Player VALUES (76561198000333004,'Gorgc',    'N-AMERICA',     DATE '2018-02-14','Crusader');
 INSERT INTO Player VALUES (76561198000333005,'FlameStrikeFan','CHINA',   DATE '2019-08-17','Crusader');
 -- Archon
 INSERT INTO Player VALUES (76561198000444001,'ArchonArcher', 'CHINA',    DATE '2013-06-25','Archon');
-INSERT INTO Player VALUES (76561198000444002,'MidOrFeed_v2','FILIPINO' ,    DATE '2015-11-30','Archon');
-INSERT INTO Player VALUES (76561198000444003,'SilentSupportPro','S-AMERICA', DATE '2017-04-04','Archon');
-INSERT INTO Player VALUES (76561198000444004,'JungleEveryGame','S-AMERICA',  DATE '2018-07-19','Archon');
-INSERT INTO Player VALUES (76561198000444005,'DoubleClickDagon','S-AMERICA', DATE '2020-01-07','Archon');
+INSERT INTO Player VALUES (76561198000444002,'NOUNS.Moo','FILIPINO' ,    DATE '2015-11-30','Archon');
+INSERT INTO Player VALUES (76561198000444003,'ODPixel','S-AMERICA', DATE '2017-04-04','Archon');
+INSERT INTO Player VALUES (76561198000444004,'Parker','S-AMERICA',  DATE '2018-07-19','Archon');
+INSERT INTO Player VALUES (76561198000444005,'SR.ミヤレル','S-AMERICA', DATE '2020-01-07','Archon');
 -- Legend
-INSERT INTO Player VALUES (76561198000555001,'LegendaryMidLaner','S-AMERICA',DATE '2012-08-01','Legend');
-INSERT INTO Player VALUES (76561198000555002,'CoreOrSupport', 'S-AMERICA',   DATE '2014-05-17','Legend');
-INSERT INTO Player VALUES (76561198000555003,'Warpgate_Invoker','S-AMERICA', DATE '2016-09-23','Legend');
-INSERT INTO Player VALUES (76561198000555004,'HexQueen_Lion','S-AMERICA',    DATE '2017-03-12','Legend');
+INSERT INTO Player VALUES (76561198000555001,'NMSS.Raven','S-AMERICA',DATE '2012-08-01','Legend');
+INSERT INTO Player VALUES (76561198000555002,'CoreOt', 'S-AMERICA',   DATE '2014-05-17','Legend');
+INSERT INTO Player VALUES (76561198000555003,'Brylu','E-EUROPE', DATE '2016-09-23','Legend');
+INSERT INTO Player VALUES (76561198000555004,'Edyta Karas','E-EUROPE',    DATE '2017-03-12','Legend');
 INSERT INTO Player VALUES (76561198000555005,'Pudge_Hooker_PL','E-EUROPE',  DATE '2019-06-06','Legend');
 -- Ancient
 INSERT INTO Player VALUES (76561198000666001,'AncientOneSupreme','RUSSIA',DATE '2013-02-28','Ancient');
 INSERT INTO Player VALUES (76561198000666002,'VoidComboMaster','RUSSIA',  DATE '2015-10-10','Ancient');
 INSERT INTO Player VALUES (76561198000666003,'EgoBoostedCarry','RUSSIA',  DATE '2016-12-31','Ancient');
-INSERT INTO Player VALUES (76561198000666004,'SleepySupport',  'RUSSIA',  DATE '2018-04-04','Ancient');
-INSERT INTO Player VALUES (76561198000666005,'MorphingDreams','CHINA',   DATE '2020-09-15','Ancient');
+INSERT INTO Player VALUES (76561198000666004,'NGX.Suma1L-',  'RUSSIA',  DATE '2018-04-04','Ancient');
+INSERT INTO Player VALUES (76561198000666005,'DkPhobos','CHINA',   DATE '2020-09-15','Ancient');
 -- Divine
-INSERT INTO Player VALUES (76561198000777001,'GodlikeInvoker','RUSSIA',   DATE '2012-11-11','Divine');
-INSERT INTO Player VALUES (76561198000777002,'SpectreDivine','RUSSIA',    DATE '2014-07-04','Divine');
+INSERT INTO Player VALUES (76561198000777001,'Moxxi','RUSSIA',   DATE '2012-11-11','Divine');
+INSERT INTO Player VALUES (76561198000777002,'Lyrical','RUSSIA',    DATE '2014-07-04','Divine');
 INSERT INTO Player VALUES (76561198000777003,'MidNightSaber','RUSSIA',    DATE '2015-05-05','Divine');
-INSERT INTO Player VALUES (76561198000777004,'UrsaGodMode', 'RUSSIA',     DATE '2017-01-20','Divine');
-INSERT INTO Player VALUES (76561198000777005,'QuietButLethal','CHINA',   DATE '2019-03-03','Divine');
+INSERT INTO Player VALUES (76561198000777004,'Liquid.MATUMBAMAN', 'RUSSIA',     DATE '2017-01-20','Divine');
+INSERT INTO Player VALUES (76561198000777005,'FLCN.AMMAR_THE_F','CHINA',   DATE '2019-03-03','Divine');
 -- Immortal
 INSERT INTO Player VALUES (76561198000888001,'N0tail_wannabe', 'RUSSIA',  DATE '2011-06-15','Immortal');
-INSERT INTO Player VALUES (76561198000888002,'TopNetWorthPlayer','RUSSIA',DATE '2012-02-20','Immortal');
-INSERT INTO Player VALUES (76561198000888003,'GH_Copy_Paste', 'RUSSIA',   DATE '2013-04-01','Immortal');
-INSERT INTO Player VALUES (76561198000888004,'Crit_Or_Skip','CHINA',     DATE '2014-09-09','Immortal');
-INSERT INTO Player VALUES (76561198000888005,'MiraculousAgi','CHINA',    DATE '2015-12-12','Immortal');
+INSERT INTO Player VALUES (76561198000888002,'Dendi','RUSSIA',DATE '2012-02-20','Immortal');
+INSERT INTO Player VALUES (76561198000888003,'сатору гойджа', 'RUSSIA',   DATE '2013-04-01','Immortal');
+INSERT INTO Player VALUES (76561198000888004,'Tojara','CHINA',     DATE '2014-09-09','Immortal');
+INSERT INTO Player VALUES (76561198000888005,'Blitz','CHINA',    DATE '2015-12-12','Immortal');
 
 COMMIT;
-
-SELECT * FROM Hero;
-SELECT * FROM Item;
-SELECT * FROM Player;
-
-
-

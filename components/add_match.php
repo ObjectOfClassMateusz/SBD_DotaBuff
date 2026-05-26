@@ -11,8 +11,10 @@ $items   = $db_conn ? db_query($db_conn, "SELECT ID, NAME FROM SYS.Item ORDER BY
 $success_msg = null;
 $error_msg   = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
-    try {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) 
+{
+    try 
+    {
         $mode      = $_POST['game_mode']    ?? 'Normal';   // Ranked / Normal
         $winner    = $_POST['winner_side']  ?? 'Radiant';  // Radiant / Dire
         $dur_h     = (int)($_POST['dur_h']  ?? 0);
@@ -25,8 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
         $hp_ids = [];
         $sides  = ['radiant', 'dire'];
 
-        foreach ($sides as $side) {
-            for ($pos = 1; $pos <= 5; $pos++) {
+        foreach ($sides as $side) 
+        {
+            for ($pos = 1; $pos <= 5; $pos++) 
+            {
                 $pfx = $side . '_' . $pos;
 
                 $steam_id  = (int)($_POST[$pfx . '_player']  ?? 0);
@@ -41,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
                 $slot4     = (int)($_POST[$pfx . '_item4']   ?? 0) ?: 'NULL';
                 $slot5     = (int)($_POST[$pfx . '_item5']   ?? 0) ?: 'NULL';
                 $slot6     = (int)($_POST[$pfx . '_item6']   ?? 0) ?: 'NULL';
-
-                if (!$steam_id || !$hero_id) {
+                if (!$steam_id || !$hero_id) 
+                {
                     throw new Exception("Brak gracza lub bohatera dla pozycji {$pos} ({$side})");
                 }
 

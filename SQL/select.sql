@@ -25,3 +25,10 @@ SELECT * FROM Player;
 SELECT * FROM Hero_Played;
 SELECT * FROM match_game;
 SELECT * FROM team;
+
+
+SELECT 'Hero_Played' AS entity, COUNT(*) AS total FROM Hero_Played
+UNION ALL
+SELECT 'Team',       COUNT(*) FROM Team
+UNION ALL
+SELECT 'Match_Game', COUNT(*) FROM Match_Game;
