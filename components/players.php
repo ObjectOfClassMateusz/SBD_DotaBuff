@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db.php';
+require_once 'db.php';
 $page_title = 'Players';
 
 $filter_nick = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -17,7 +17,7 @@ $sql .= " ORDER BY CASE RANK
     WHEN 'Legend'   THEN 4 WHEN 'Archon'   THEN 5 WHEN 'Crusader' THEN 6
     WHEN 'Guardian' THEN 7 ELSE 8 END, NICKNAME";
 
-require_once 'includes/header.php';
+require_once 'header.php';
 
 $rank_badges = [
   'Herald'   => 'badge-herald',
@@ -34,7 +34,7 @@ $rank_badges = [
 <div class="page-wrap">
 
   <div class="page-banner" data-label="PLAYERS">
-    <div class="banner-tag">// Baza graczy</div>
+    <div class="banner-tag">Baza graczy</div>
     <h1 class="banner-title">Player <span>Lookup</span></h1>
     <p class="banner-sub">Wyszukaj gracza po nicku lub Steam ID. Filtruj po randze.</p>
     <div class="banner-divider"></div>
@@ -89,6 +89,7 @@ $rank_badges = [
           <th class="sortable">Nick</th>
           <th>Ranga</th>
           <th>Data konta</th>
+          <th>Region</th>
         </tr>
       </thead>
       <tbody>
@@ -108,6 +109,7 @@ $rank_badges = [
             <td class="td-bold"><?= htmlspecialchars($p['NICKNAME']) ?></td>
             <td><span class="badge <?= $bc ?>"><?= htmlspecialchars($rank) ?></span></td>
             <td class="td-mono"><?= htmlspecialchars($p['ACCOUNT_CREATED']) ?></td>
+            <td class="td-bold"><?= htmlspecialchars($p['REGION']) ?></td>
           </tr>
         <?php endforeach; endif; ?>
       </tbody>
@@ -146,4 +148,4 @@ $rank_badges = [
   <?php endif; ?>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once 'footer.php'; ?>

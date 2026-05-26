@@ -1,5 +1,5 @@
 <?php
-  $current_page = basename( htmlspecialchars($_SERVER['PHP_SELF']), '.php');
+  $current_page = basename(htmlspecialchars($_SERVER['PHP_SELF']), '.php');
 ?>
 <!DOCTYPE html>
 <html lang="pl">

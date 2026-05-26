@@ -124,7 +124,7 @@ require_once 'components/header.php';
     </table>
   </div>
   <div style="margin-top:0.8rem; text-align:right;">
-    <a href="matches.php" class="btn btn-outline" style="font-size:0.82rem;">Wszystkie mecze →</a>
+    <a href="components/matches.php" class="btn btn-outline" style="font-size:0.82rem;">Wszystkie mecze →</a>
   </div>
   <?php endif; ?>
 

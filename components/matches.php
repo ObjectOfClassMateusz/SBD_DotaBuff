@@ -21,7 +21,7 @@ require_once 'header.php';
 <div class="page-wrap">
 
   <div class="page-banner" data-label="MATCHES">
-    <div class="banner-tag">// Historia meczy</div>
+    <div class="banner-tag">Historia meczy</div>
     <h1 class="banner-title">Match <span>History</span></h1>
     <p class="banner-sub">Przeglądaj wszystkie rozegrane mecze, filtruj po typie i zwycięzcy.</p>
     <div class="banner-divider"></div>
@@ -110,6 +110,7 @@ require_once 'header.php';
           <th style="color:var(--red-bright);">Dire</th>
           <th>Zwycięzca</th>
           <th>Typ</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -144,6 +145,12 @@ require_once 'header.php';
               </span>
             </td>
           </tr>
+          <td>
+              <a href="matchId.php?id=<?= $m['ID'] ?>" class="btn btn-outline"
+                 style="font-size:0.75rem; padding:0.3rem 0.9rem; white-space:nowrap;">
+                🔍 Szczegóły
+              </a>
+            </td>
         <?php endforeach; endif; ?>
       </tbody>
     </table>
