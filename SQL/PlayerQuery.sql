@@ -1,33 +1,70 @@
 
+CREATE OR REPLACE TYPE FoundPlayer AS OBJECT (
+    id NUMBER,
+    nickname VARCHAR2(64)
+);
+/
+
+CREATE OR REPLACE TYPE FoundPlayerList AS TABLE OF FoundPlayer;
+/
+
+
+CREATE OR REPLACE TYPE PlayerQueryInfo AS OBJECT (
+    id NUMBER,
+    nickname VARCHAR2(64),
+    region VARCHAR2(64),
+    account_created DATE,
+    rank VARCHAR(64)
+);
+/
+
+
 CREATE OR REPLACE PACKAGE PlayerQuery
 AS
     
-    FUNCTION SearchByNick (v_nick IN Player.nickname%TYPE) RETURN Player.steam_id%TYPE;
+    FUNCTION SearchByNick(v_nick IN Player.nickname%TYPE) RETURN FoundPlayerList PIPELINED;
     
-    -- FUNCTION GetPlayerInfo(v_id IN Player.steam_id%TYPE) RETURN ;
+    FUNCTION GetPlayerInfo(v_id IN Player.steam_id%TYPE) RETURN PlayerQueryInfo;
     
 END;
 /
 
+
 CREATE OR REPLACE PACKAGE BODY PlayerQuery
 AS
     
-    FUNCTION SearchByNick (v_nick IN Player.nickname%TYPE) RETURN Player.steam_id%TYPE
+    FUNCTION SearchByNick (v_nick IN Player.nickname%TYPE) RETURN FoundPlayerList PIPELINED
     IS
-        v_id Player.steam_id%TYPE;
     BEGIN
-        SELECT steam_id INTO v_id
-        FROM Player
-        WHERE upper(nickname) = upper(v_nick);
         
-        RETURN v_id;
-        
-    EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('Could not find player with nickname: ' || v_nick);
-        RETURN NULL;
+        FOR v_rec IN (SELECT steam_id, nickname
+                      FROM Player
+                      WHERE upper(nickname) LIKE ('%' || upper(v_nick) || '%')
+                      ORDER BY nickname) LOOP
+            
+            PIPE ROW (FoundPlayer(v_rec.steam_id, v_rec.nickname));
+            
+        END LOOP;
+    END;
+    
+    FUNCTION GetPlayerInfo(v_id IN Player.steam_id%TYPE) RETURN PlayerQueryInfo
+    AS
+    BEGIN
+        FOR v_rec IN (SELECT * FROM Player
+                      WHERE steam_id = v_id) LOOP
+            
+            RETURN PlayerQueryInfo(v_rec.steam_id, v_rec.nickname, v_rec.region, v_rec.account_created, v_rec.rank);
+            
+        END LOOP;
     END;
     
 END;
 /
+
+COMMIT;
+
+
+SELECT * FROM table(PlayerQuery.SearchByNick('Alliance'));
+
+SELECT PlayerQuery.GetPlayerInfo(76561198000222001).region FROM dual;
 
