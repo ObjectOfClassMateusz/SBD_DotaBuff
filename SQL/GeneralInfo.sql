@@ -29,6 +29,7 @@ AS
     FUNCTION GetLatestPatchId RETURN NUMBER;
     FUNCTION GetPatchHeroChanges(v_patchId Patch_Info.id%TYPE) RETURN PatchChangeList PIPELINED;
     FUNCTION GetPatchItemChanges(v_patchId Patch_Info.id%TYPE) RETURN PatchChangeList PIPELINED;
+    FUNCTION GetPatchBalance(v_patchId Patch_Info.id%TYPE) RETURN NUMBER;
 
     FUNCTION GetNumMatches(v_date IN DATE) RETURN NUMBER;
     
@@ -175,6 +176,35 @@ AS
     END;
     
     
+    FUNCTION GetPatchBalance(v_patchId Patch_Info.id%TYPE) RETURN NUMBER
+    AS
+        v_numBuffsHeros NUMBER := 0;
+        v_numNerfsHeros NUMBER := 0;
+        
+        v_numBuffsItems NUMBER := 0;
+        v_numNerfsItems NUMBER := 0;
+    BEGIN
+        
+        SELECT count(id) INTO v_numBuffsHeros
+        FROM Patch_Hero_Change
+        WHERE patch_id = v_patchId AND change_flag = 1;
+        
+        SELECT count(id) INTO v_numNerfsHeros
+        FROM Patch_Hero_Change
+        WHERE patch_id = v_patchId AND change_flag = 2;
+        
+        SELECT count(id) INTO v_numBuffsItems
+        FROM Patch_Item_Change
+        WHERE patch_id = v_patchId AND change_flag = 1;
+        
+        SELECT count(id) INTO v_numNerfsItems
+        FROM Patch_Item_Change
+        WHERE patch_id = v_patchId AND change_flag = 2;
+        
+        RETURN v_numBuffsHeros - v_numNerfsHeros + v_numBuffsItems - v_numNerfsItems;
+    END;
+    
+    
 END GeneralInfo;
 /
 
@@ -186,6 +216,7 @@ SELECT GeneralInfo.GetLatestPatchId FROM DUAL;
 SELECT * FROM table(GeneralInfo.GetPatchHeroChanges(GeneralInfo.GetLatestPatchId));
 SELECT * FROM table(GeneralInfo.GetPatchItemChanges(GeneralInfo.GetLatestPatchId));
 
+SELECT version_string, GeneralInfo.GetPatchBalance(id) FROM Patch_Info;
 
 SELECT GeneralInfo.GetNumMatches(TO_DATE('24/11/15')) FROM DUAL;
 
