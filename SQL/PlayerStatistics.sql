@@ -9,6 +9,7 @@ CREATE OR REPLACE TYPE MatchList IS TABLE OF QueriedMatch;
 
 CREATE OR REPLACE TYPE HeroFrequency IS OBJECT (
     id NUMBER,
+    name VARCHAR(100),
     num_plays NUMBER
 );
 /
@@ -40,6 +41,11 @@ CREATE OR REPLACE PACKAGE PlayerStatistics AS
                                        
     FUNCTION NettoWorth(v_playerId IN Player.steam_id%TYPE,
                         v_matchId IN Match_Game.id%TYPE) RETURN NUMBER;
+                        
+                        
+    FUNCTION GetFavouritePosition(v_playerId IN Player.steam_id%TYPE) RETURN NUMBER;
+    
+    FUNCTION GetFavouriteHero(v_playerId IN Player.steam_id%TYPE) RETURN HeroFrequency;
     
 END PlayerStatistics;
 /
@@ -158,9 +164,12 @@ CREATE OR REPLACE PACKAGE BODY PlayerStatistics AS
                          GROUP BY h.hero_id
                          ORDER BY numberOfPlays DESC)
                          WHERE rownum <= v_count);
+                         
+        v_name Hero.name%TYPE;
     BEGIN
         FOR v_rec IN c_cur LOOP
-            PIPE ROW (HeroFrequency(v_rec.heroId, v_rec.numberOfPlays));
+            SELECT name INTO v_name FROM Hero WHERE id = v_rec.heroId;
+            PIPE ROW (HeroFrequency(v_rec.heroId, v_name, v_rec.numberOfPlays));
         END LOOP;
     END;
     
@@ -184,6 +193,41 @@ CREATE OR REPLACE PACKAGE BODY PlayerStatistics AS
         RETURN v_netto;
     END;
     
+    
+    FUNCTION GetFavouritePosition(v_playerId IN Player.steam_id%TYPE) RETURN NUMBER
+    AS
+        v_pos NUMBER := NULL;
+        v_numPlays NUMBER := 0;
+    BEGIN
+        
+        SELECT hp.position, count(id) numberOfPlays INTO v_pos, v_numPlays
+        FROM Hero_Played hp
+        WHERE hp.steam_id = v_playerId
+        GROUP BY hp.position
+        ORDER BY numberOfPlays DESC
+        FETCH FIRST 1 ROWS ONLY;
+        
+        RETURN v_pos;
+    END;
+    
+    FUNCTION GetFavouriteHero(v_playerId IN Player.steam_id%TYPE) RETURN HeroFrequency
+    AS
+        v_heroId NUMBER := NULL;
+        v_numPlays NUMBER := 0;
+        v_name Hero.name%TYPE := NULL;
+        
+    BEGIN
+        SELECT hp.hero_id, count(hp.id) numberOfPlays, max(name) INTO v_heroId, v_numPlays, v_name
+        FROM Hero_Played hp JOIN Hero h
+            ON hp.hero_id = h.id
+        WHERE hp.steam_id = v_playerId
+        GROUP BY hp.hero_id
+        ORDER BY numberOfPlays DESC
+        FETCH FIRST 1 ROWS ONLY;
+        
+        return HeroFrequency(v_heroId, v_name, v_numPlays);
+    END;
+    
 
 END PlayerStatistics;
 /
@@ -202,3 +246,9 @@ SELECT PlayerStatistics.AvgKda(76561198000888002, 0, TO_DATE('2005-05-05'), TO_D
 SELECT * FROM table(PlayerStatistics.MostFrequentlyPlayedHeros(76561198000777002, 10, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')));
 
 SELECT PlayerStatistics.NettoWorth(76561198000777002, 2) FROM dual;
+
+
+SELECT steam_id, nickname, PlayerStatistics.GetFavouritePosition(steam_id) FROM Player;
+
+SELECT steam_id, nickname, PlayerStatistics.GetFavouriteHero(steam_id).name FROM Player;
+
