@@ -12,6 +12,7 @@ CREATE OR REPLACE TYPE ItemPopularityList AS TABLE OF ItemPopularity;
 
 CREATE OR REPLACE TYPE PatchChangeDTO AS OBJECT (
     version_string VARCHAR2(30),
+    release_date DATE,
     target_id NUMBER,
     target_name VARCHAR(100),
     change_flag NUMBER(1),
@@ -62,26 +63,26 @@ AS
     FUNCTION GetPatchHeroChanges(v_patchId Patch_Info.id%TYPE) RETURN PatchChangeList PIPELINED
     AS
     BEGIN
-        FOR v_rec IN (SELECT version_string, h.id heroId, name, change_flag, change_description 
+        FOR v_rec IN (SELECT version_string, release_date, h.id heroId, name, change_flag, change_description 
                       FROM Hero h JOIN Patch_Hero_Change p
                           ON h.id = p.hero_id JOIN Patch_Info pi
                           ON pi.id = p.patch_id
                       WHERE p.patch_id = v_patchId)
         LOOP
-            PIPE ROW (PatchChangeDTO(v_rec.version_string, v_rec.heroId, v_rec.name, v_rec.change_flag, v_rec.change_description));
+            PIPE ROW (PatchChangeDTO(v_rec.version_string, v_rec.release_date, v_rec.heroId, v_rec.name, v_rec.change_flag, v_rec.change_description));
         END LOOP;
     END;
     
     FUNCTION GetPatchItemChanges(v_patchId Patch_Info.id%TYPE) RETURN PatchChangeList PIPELINED
     AS
     BEGIN
-        FOR v_rec IN (SELECT version_string, i.id itemId, name, change_flag, change_description 
+        FOR v_rec IN (SELECT version_string, release_date, i.id itemId, name, change_flag, change_description 
                       FROM Item i JOIN Patch_Item_Change p
                           ON i.id = p.item_id JOIN Patch_Info pi
                           ON pi.id = p.patch_id
                       WHERE p.patch_id = v_patchId)
         LOOP
-            PIPE ROW (PatchChangeDTO(v_rec.version_string, v_rec.itemId, v_rec.name, v_rec.change_flag, v_rec.change_description));
+            PIPE ROW (PatchChangeDTO(v_rec.version_string, v_rec.release_date, v_rec.itemId, v_rec.name, v_rec.change_flag, v_rec.change_description));
         END LOOP;
     END;
 

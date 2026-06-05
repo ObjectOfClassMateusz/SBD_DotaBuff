@@ -173,6 +173,11 @@ AS
         INSERT INTO Match_Game (match_time, team1_id, team2_id, winner_id, is_ranked) VALUES (v_time, v_t1_id, v_t2_id, v_winnerId, v_is_ranked);
         
         COMMIT;
+        
+    EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
     END;
 
 
@@ -278,6 +283,36 @@ END DatabaseAdministration;
 
 
 COMMIT;
+
+
+DECLARE
+    v_dazzleId Hero.id%TYPE;
+    v_bloodstoneId Item.id%TYPE;
+BEGIN
+    DatabaseAdministration.NewPatch('7.42', TO_DATE('2026-06-20'));
+    
+    DatabaseAdministration.AddNewHero('Michael', 'Intelligence');
+    
+    DatabaseAdministration.AddNewItem('Axe Wand');
+    
+    SELECT id INTO v_dazzleId FROM Hero WHERE name='Dazzle';
+    DatabaseAdministration.PatchHero(v_dazzleId, 1, 'Increased max HP');
+    
+    SELECT id INTO v_bloodstoneId FROM Item WHERE name='Bloodstone';
+    DatabaseAdministration.PatchItem(v_bloodstoneId, 2, 'Decreased bonus strength');
+    
+    UPDATE Hero
+    SET primary_attribute='Strength'
+    WHERE name='Bane';
+    
+    UPDATE Item
+    SET name='Manta Styles'
+    WHERE name='Manta Style';
+END;
+/
+
+SELECT * FROM table(GeneralInfo.GetPatchHeroChanges(GeneralInfo.GetLatestPatchId));
+SELECT * FROM table(GeneralInfo.GetPatchItemChanges(GeneralInfo.GetLatestPatchId));
 
 
 DECLARE
