@@ -76,6 +76,11 @@ AS
     PROCEDURE PatchItem(v_itemId IN Item.id%TYPE,
                         v_change_flag IN Patch_Hero_Change.change_flag%TYPE,
                         v_change_desc IN Patch_Hero_Change.change_description%TYPE);
+                        
+                        
+    PROCEDURE ArchiveWarm;
+    
+    PROCEDURE ArchiveCold;
 
 END DatabaseAdministration;
 /
@@ -277,6 +282,156 @@ AS
         INSERT INTO Patch_Item_Change (patch_id, item_id, change_flag, change_description) VALUES (v_patchId, v_itemId, v_change_flag, v_change_desc);
     END;
     
+    
+    
+    PROCEDURE ArchiveWarm
+    AS
+        v_count NUMBER;
+    BEGIN
+        FOR v_rec IN (SELECT *
+                      FROM Hero_Played hp
+                      WHERE EXISTS (SELECT 1
+                                    FROM Match_Game m, Team t
+                                    WHERE (m.team1_id = t.id OR m.team2_id = t.id) AND
+                                          (t.hp1 = hp.id OR
+                                           t.hp2 = hp.id OR
+                                           t.hp3 = hp.id OR
+                                           t.hp4 = hp.id OR
+                                           t.hp5 = hp.id) AND
+                                          (TRUNC(match_time) + 30) < SYSDATE))
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Warm_Hero_Played
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Warm_Hero_Played (id, steam_id, hero_id, position,
+                    slot1, slot2, slot3, slot4, slot5, slot6, kills, deaths, assists, netto)
+                    VALUES (v_rec.id, v_rec.steam_id, v_rec.hero_id, v_rec.position,
+                    v_rec.slot1, v_rec.slot2, v_rec.slot3, v_rec.slot4, v_rec.slot5, v_rec.slot6, v_rec.kills, v_rec.deaths, v_rec.assists, v_rec.netto);
+            END IF;
+            
+        END LOOP;
+        
+        
+        FOR v_rec IN (SELECT *
+                      FROM Team t
+                      WHERE EXISTS (SELECT 1
+                                    FROM Match_Game m
+                                    WHERE (m.team1_id = t.id OR m.team2_id = t.id) AND
+                                          (TRUNC(match_time) + 30) < SYSDATE))
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Warm_Team
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Warm_Team (id, side, hp1, hp2, hp3, hp4, hp5)
+                VALUES (v_rec.id, v_rec.side, v_rec.hp1, v_rec.hp2, v_rec.hp3, v_rec.hp4, v_rec.hp5);
+            END IF;
+            
+        END LOOP;
+        
+        
+        FOR v_rec IN (SELECT *
+                      FROM Match_Game
+                      WHERE (TRUNC(match_time) + 30) < SYSDATE)
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Warm_Match_Game
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Warm_Match_Game (id, match_time, team1_id, team2_id, winner_id, is_ranked)
+                VALUES (v_rec.id, v_rec.match_time, v_rec.team1_id, v_rec.team2_id, v_rec.winner_id, v_rec.is_ranked);
+            END IF;
+            
+        END LOOP;
+        
+        
+        COMMIT;
+    EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+    END;
+    
+    PROCEDURE ArchiveCold
+    AS
+        v_count NUMBER;
+    BEGIN
+        FOR v_rec IN (SELECT *
+                      FROM Hero_Played hp
+                      WHERE EXISTS (SELECT 1
+                                    FROM Match_Game m, Team t
+                                    WHERE (m.team1_id = t.id OR m.team2_id = t.id) AND
+                                          (t.hp1 = hp.id OR
+                                           t.hp2 = hp.id OR
+                                           t.hp3 = hp.id OR
+                                           t.hp4 = hp.id OR
+                                           t.hp5 = hp.id) AND
+                                          (TRUNC(match_time) + 365) < SYSDATE))
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Cold_Hero_Played
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Cold_Hero_Played (id, steam_id, hero_id, position,
+                    slot1, slot2, slot3, slot4, slot5, slot6, kills, deaths, assists, netto)
+                    VALUES (v_rec.id, v_rec.steam_id, v_rec.hero_id, v_rec.position,
+                    v_rec.slot1, v_rec.slot2, v_rec.slot3, v_rec.slot4, v_rec.slot5, v_rec.slot6, v_rec.kills, v_rec.deaths, v_rec.assists, v_rec.netto);
+            END IF;
+            
+        END LOOP;
+        
+        
+        FOR v_rec IN (SELECT *
+                      FROM Team t
+                      WHERE EXISTS (SELECT 1
+                                    FROM Match_Game m
+                                    WHERE (m.team1_id = t.id OR m.team2_id = t.id) AND
+                                          (TRUNC(match_time) + 365) < SYSDATE))
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Cold_Team
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Cold_Team (id, side, hp1, hp2, hp3, hp4, hp5)
+                VALUES (v_rec.id, v_rec.side, v_rec.hp1, v_rec.hp2, v_rec.hp3, v_rec.hp4, v_rec.hp5);
+            END IF;
+            
+        END LOOP;
+        
+        
+        FOR v_rec IN (SELECT *
+                      FROM Match_Game
+                      WHERE (TRUNC(match_time) + 365) < SYSDATE)
+        LOOP
+            
+            SELECT count(id) INTO v_count
+            FROM Archived_Cold_Match_Game
+            WHERE id = v_rec.id;
+            
+            IF v_count = 0 THEN
+                INSERT INTO Archived_Cold_Match_Game (id, match_time, team1_id, team2_id, winner_id, is_ranked)
+                VALUES (v_rec.id, v_rec.match_time, v_rec.team1_id, v_rec.team2_id, v_rec.winner_id, v_rec.is_ranked);
+            END IF;
+            
+        END LOOP;
+        
+        
+        COMMIT;
+    EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+    END;
+    
 
 END DatabaseAdministration;
 /
@@ -417,4 +572,11 @@ END;
 /
 
 SELECT * FROM Match_Game;
+
+EXECUTE DatabaseAdministration.ArchiveWarm;
+SELECT * FROM Archived_Warm_Match_Game;
+
+
+EXECUTE DatabaseAdministration.ArchiveCold;
+SELECT * FROM Archived_Cold_Match_Game;
 
