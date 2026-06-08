@@ -222,14 +222,16 @@ require_once 'header.php';
 
 /* KDA */
 .kda-cell { font-family:var(--font-mono); white-space: nowrap; }
-.kda-k    { color: #81c784; }
 .kda-sep  { color: var(--text-muted); }
-.kda-d    { color: var(--red-bright); }
-.kda-a    { color: #64b5f6; }
-.kda-val  { color: var(--gold); font-weight:600; font-size:0.8rem; }
+.kda-val  {  font-weight:600; font-size:0.8rem; }
 
 /* Netto */
-.netto-cell { color: var(--gold); font-family:var(--font-mono); font-weight:600; }
+.netto-cell 
+{ 
+font-family:var(--font-mono) ; 
+font-weight:600; 
+color: var(--gold)!important; 
+}
 
 /* Items */
 .items-cell { display:flex; gap:3px; flex-wrap:wrap; align-items:center; justify-content:center; }
@@ -356,7 +358,17 @@ require_once 'header.php';
                 
               </span>
               <div>
-                <div class="hero-name"><?= htmlspecialchars($p['HERO_NAME']) ?></div>
+                <div class="hero-name">
+                  <?php 
+                    $hero_name = strtolower(htmlspecialchars($p['HERO_NAME'] ?? 'Unknown'));
+                    $hero_name = str_replace(' ', '-', $hero_name);
+                  ?>
+                  <img style="margin-right:4px; vertical-align:middle; width:100px;"
+                       src="https://pl.dotabuff.com/assets/heroes/<?= $hero_name ?>.jpg"
+                       alt="hero_img_error"
+                       title="<?= htmlspecialchars($p['HERO_NAME'] ?? 'Unknown') ?>">
+                </div>
+               </div>
                 <div style="display:flex; align-items:center; gap:5px;">
                   <span class="player-nick"><?= htmlspecialchars($p['NICKNAME']) ?></span>
                   <span class="badge <?= $rank_bc[$p['RANK']] ?? 'badge-herald' ?>" style="font-size:0.6rem; padding:1px 5px;">
@@ -384,10 +396,16 @@ require_once 'header.php';
           <td>
             <div class="items-cell">
               <?php foreach ($items as $item): ?>
+                <?php 
+                    $item_name = strtolower($item ?? '');
+                    $item_name = str_replace(' ', '-', $item_name);
+                    $item_name = preg_replace("/'/", "", $item_name);
+                  ?>
                 <?php if ($item): ?>
-                  <span class="item-slot" title="<?= htmlspecialchars($item) ?>">
-                    <?= htmlspecialchars($item) ?>
-                  </span>
+                  <img style="margin-right:4px; vertical-align:middle; width:54px;"
+                       src="https://pl.dotabuff.com/assets/items/<?= $item_name ?>.jpg"
+                       alt="item_img_error"
+                       title="<?= htmlspecialchars($item) ?>">
                 <?php else: ?>
                   <span class="item-slot empty">—</span>
                 <?php endif; ?>

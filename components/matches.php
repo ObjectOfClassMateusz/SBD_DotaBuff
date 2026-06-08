@@ -144,13 +144,13 @@ require_once 'header.php';
                 <?= $m['GTYPE'] ?>
               </span>
             </td>
-          </tr>
-          <td>
+            <td>
               <a href="matchId.php?id=<?= $m['ID'] ?>" class="btn btn-outline"
                  style="font-size:0.75rem; padding:0.3rem 0.9rem; white-space:nowrap;">
                 🔍 Szczegóły
               </a>
-            </td>
+          </td>
+          </tr>
         <?php endforeach; endif; ?>
       </tbody>
     </table>

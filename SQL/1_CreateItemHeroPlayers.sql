@@ -80,6 +80,8 @@ CREATE TABLE Player (
 --  ITEMS  (individual INSERTs — avoids sequence collision)
 -- ============================================================
 -- Basic stat components
+INSERT INTO Item (name) VALUES ('Bottle');
+INSERT INTO Item (name) VALUES ('Boots of Speed');
 INSERT INTO Item (name) VALUES ('Iron Branch');
 INSERT INTO Item (name) VALUES ('Gauntlets of Strength');
 INSERT INTO Item (name) VALUES ('Slippers of Agility');
@@ -159,8 +161,10 @@ INSERT INTO Item (name) VALUES ('Hurricane Pike');
 INSERT INTO Item (name) VALUES ('Glimmer Cape');
 INSERT INTO Item (name) VALUES ('Aether Lens');
 INSERT INTO Item (name) VALUES ('Rod of Atos');
+INSERT INTO Item (name) VALUES ('Spirit Vessel');
 -- Intelligence / Spell items
 INSERT INTO Item (name) VALUES ('Dagon');
+INSERT INTO Item (name) VALUES ('Meteor Hammer');
 INSERT INTO Item (name) VALUES ('Necronomicon');
 INSERT INTO Item (name) VALUES ('Orchid Malevolence');
 INSERT INTO Item (name) VALUES ('Bloodthorn');
@@ -180,6 +184,7 @@ INSERT INTO Item (name) VALUES ('Yasha and Kaya');
 INSERT INTO Item (name) VALUES ('Manta Style');
 INSERT INTO Item (name) VALUES ('Diffusal Blade');
 INSERT INTO Item (name) VALUES ('Eye of Skadi');
+INSERT INTO Item (name) VALUES ('Echo Sabre');
 -- Attack speed / Crit / Physical
 INSERT INTO Item (name) VALUES ('Maelstrom');
 INSERT INTO Item (name) VALUES ('Mjollnir');
@@ -223,6 +228,8 @@ INSERT INTO Item (name) VALUES ('Arcane Blink');
 -- ============================================================
 -- STRENGTH
 INSERT INTO Hero (name, primary_attribute) VALUES ('Axe','Strength');
+INSERT INTO Hero (name, primary_attribute) VALUES ('Alchemist','Strength');
+INSERT INTO Hero (name, primary_attribute) VALUES ('Abaddon','Strength');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Beastmaster','Strength');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Brewmaster','Strength');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Bristleback','Strength');
@@ -337,6 +344,7 @@ INSERT INTO Hero (name, primary_attribute) VALUES ('Tinker','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Visage','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Void Spirit','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Warlock','Intelligence');
+INSERT INTO Hero (name, primary_attribute) VALUES ('Winter Wyvern','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Witch Doctor','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Zeus','Intelligence');
 INSERT INTO Hero (name, primary_attribute) VALUES ('Techies','Intelligence');
