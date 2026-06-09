@@ -7,7 +7,7 @@ $filter_name = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // Build query
 $where = [];
-$sql = "SELECT * FROM SYS.Hero";
+$sql = "SELECT * FROM Hero";
 if ($filter_attr) $where[] = "primary_attribute = '" . addslashes($filter_attr) . "'";
 if ($filter_name) $where[] = "UPPER(name) LIKE UPPER('%" . addslashes($filter_name) . "%')";
 if ($where) $sql .= " WHERE " . implode(" AND ", $where);
@@ -124,7 +124,7 @@ $attr_map = [
 <?php
 
 
-//    $stmt = oci_parse($db_conn, "SELECT * FROM SYS.Hero");
+//    $stmt = oci_parse($db_conn, "SELECT * FROM Hero");
 //    oci_execute($stmt);
 
 //    while ($row = oci_fetch_array($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {

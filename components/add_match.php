@@ -1,18 +1,17 @@
 <?php
-require_once 'db.php';
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
-if (empty($_SESSION['user'])) {
-    header('Location: /DotaOracleApp/login.php?next=/DotaOracleApp/components/add_match.php');
+session_start();
+
+if (empty($_SESSION['is_admin'])) {
+    header('Location: login.php?need_admin=1');
     exit;
 }
+require_once 'db.php';
 $page_title = 'Dodaj Mecz';
 
 // ── Load reference data ────────────────────────────────────
-$heroes  = $db_conn ? db_query($db_conn, "SELECT ID, NAME, PRIMARY_ATTRIBUTE FROM SYS.Hero ORDER BY NAME") : [];
-$players = $db_conn ? db_query($db_conn, "SELECT STEAM_ID, NICKNAME, RANK FROM SYS.Player ORDER BY NICKNAME") : [];
-$items   = $db_conn ? db_query($db_conn, "SELECT ID, NAME FROM SYS.Item ORDER BY NAME") : [];
+$heroes  = $db_conn ? db_query($db_conn, "SELECT ID, NAME, PRIMARY_ATTRIBUTE FROM Hero ORDER BY NAME") : [];
+$players = $db_conn ? db_query($db_conn, "SELECT STEAM_ID, NICKNAME, RANK FROM Player ORDER BY NICKNAME") : [];
+$items   = $db_conn ? db_query($db_conn, "SELECT ID, NAME FROM Item ORDER BY NAME") : [];
 
 // ── Process POST ───────────────────────────────────────────
 $success_msg = null;
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
                     throw new Exception("Brak gracza lub bohatera dla pozycji {$pos} ({$side})");
                 }
 
-                $sql = "INSERT INTO SYS.Hero_Played
+                $sql = "INSERT INTO Hero_Played
                             (STEAM_ID, HERO_ID, POSITION, KILLS, DEATHS, ASSISTS, NETTO,
                              SLOT1, SLOT2, SLOT3, SLOT4, SLOT5, SLOT6)
                         VALUES
@@ -62,10 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
                              $slot1, $slot2, $slot3, $slot4, $slot5, $slot6)";
                 $stmt = oci_parse($db_conn, $sql);
                 oci_execute($stmt, OCI_NO_AUTO_COMMIT);
-
-                // Get the generated ID
                 $id_row = db_query($db_conn,
-                    "SELECT SYS.SEQ_HEROPLAYED_ID.CURRVAL AS CID FROM DUAL"
+                    "SELECT C##app_admin.seq_heroplayed_id.CURRVAL AS CID FROM DUAL"
                 );
                 $hp_ids[$side][$pos] = (int)$id_row[0]['CID'];
             }
@@ -75,33 +72,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $db_conn) {
         $r = $hp_ids['radiant'];
         $d = $hp_ids['dire'];
 
-        $sql = "INSERT INTO SYS.Team (SIDE, HP1, HP2, HP3, HP4, HP5)
-                VALUES ('Radiant', {$r[1]}, {$r[2]}, {$r[3]}, {$r[4]}, {$r[5]})";
+        $sql = "INSERT INTO Team (SIDE, HP1, HP2, HP3, HP4, HP5) VALUES ('Radiant', {$r[1]}, {$r[2]}, {$r[3]}, {$r[4]}, {$r[5]})";
+
+
         $stmt = oci_parse($db_conn, $sql);
         oci_execute($stmt, OCI_NO_AUTO_COMMIT);
 
-        $rad_team = db_query($db_conn, "SELECT SYS.SEQ_TEAM_ID.CURRVAL AS TID FROM DUAL");
+        $rad_team = db_query($db_conn, "SELECT C##app_admin.seq_team_id.CURRVAL AS TID FROM DUAL");
         $rad_team_id = (int)$rad_team[0]['TID'];
 
         // ── Insert Dire Team ───────────────────────────────
-        $sql = "INSERT INTO SYS.Team (SIDE, HP1, HP2, HP3, HP4, HP5)
+        $sql = "INSERT INTO Team (SIDE, HP1, HP2, HP3, HP4, HP5)
                 VALUES ('Dire', {$d[1]}, {$d[2]}, {$d[3]}, {$d[4]}, {$d[5]})";
         $stmt = oci_parse($db_conn, $sql);
         oci_execute($stmt, OCI_NO_AUTO_COMMIT);
 
-        $dire_team = db_query($db_conn, "SELECT SYS.SEQ_TEAM_ID.CURRVAL AS TID FROM DUAL");
+        $dire_team = db_query($db_conn, "SELECT C##app_admin.seq_team_id.CURRVAL AS TID FROM DUAL");
         $dire_team_id = (int)$dire_team[0]['TID'];
 
         $winner_id = ($winner === 'Radiant') ? $rad_team_id : $dire_team_id;
 
         // ── Insert Match_Game ──────────────────────────────
-        $sql = "INSERT INTO SYS.Match_Game (MATCH_TIME, TEAM1_ID, TEAM2_ID, WINNER_ID, IS_RANKED)
+        $sql = "INSERT INTO Match_Game (MATCH_TIME, TEAM1_ID, TEAM2_ID, WINNER_ID, IS_RANKED)
                 VALUES (TO_TIMESTAMP('$match_dt','YYYY-MM-DD HH24:MI'),
                         $rad_team_id, $dire_team_id, $winner_id, $is_ranked)";
         $stmt = oci_parse($db_conn, $sql);
         oci_execute($stmt, OCI_NO_AUTO_COMMIT);
 
-        $mid_row = db_query($db_conn, "SELECT SYS.SEQ_MATCH_ID.CURRVAL AS MID FROM DUAL");
+        $mid_row = db_query($db_conn, "SELECT C##app_admin.seq_match_id.CURRVAL AS MID FROM DUAL");
         $new_match_id = (int)$mid_row[0]['MID'];
 
         oci_commit($db_conn);
@@ -328,7 +326,7 @@ select.hero-sel option[data-attr="uni"] { color: #ffe082; }
 
   <!-- BANNER -->
   <div class="page-banner" data-label="INSERT">
-    <div class="banner-tag">Nowy wpis</div>
+    <div class="banner-tag">// Nowy wpis</div>
     <h1 class="banner-title">Dodaj <span>Mecz</span></h1>
     <p class="banner-sub">Wypełnij skład obu drużyn, statystyki i parametry meczu.</p>
     <div class="banner-divider"></div>
@@ -354,7 +352,7 @@ select.hero-sel option[data-attr="uni"] { color: #ffe082; }
 
     <!-- ── MATCH META ─────────────────────────────────── -->
     <div class="form-section">
-      <div class="section-label">Parametry meczu</div>
+      <div class="section-label">// Parametry meczu</div>
 
       <div class="match-meta-grid">
 

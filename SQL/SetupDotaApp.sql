@@ -1,7 +1,6 @@
 CREATE USER C##dota_app IDENTIFIED BY qwerty123;
 GRANT CONNECT TO C##dota_app;
 
-
 -- ── 1. DML na wszystkich tabelach ─────────────────────────
 GRANT SELECT, INSERT, UPDATE, DELETE ON Item        TO C##dota_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON Hero        TO C##dota_app;

@@ -10,7 +10,7 @@ $ranks = ['Herald','Guardian','Crusader','Archon','Legend','Ancient','Divine','I
 $where = [];
 if ($filter_nick) $where[] = "UPPER(NICKNAME) LIKE UPPER('%" . addslashes($filter_nick) . "%')";
 if ($filter_rank) $where[] = "RANK = '" . addslashes($filter_rank) . "'";
-$sql = "SELECT * FROM SYS.Player";
+$sql = "SELECT * FROM Player";
 if ($where) $sql .= " WHERE " . implode(" AND ", $where);
 $sql .= " ORDER BY CASE RANK
     WHEN 'Immortal' THEN 1 WHEN 'Divine'   THEN 2 WHEN 'Ancient'  THEN 3

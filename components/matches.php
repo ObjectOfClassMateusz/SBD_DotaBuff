@@ -53,10 +53,10 @@ require_once 'header.php';
   </div>
 
   <?php if ($db_conn):
-    $count_sql = "SELECT COUNT(*) FROM SYS.Match_Game m
-                  JOIN SYS.Team t1 ON t1.ID=m.TEAM1_ID
-                  JOIN SYS.Team t2 ON t2.ID=m.TEAM2_ID
-                  JOIN SYS.Team tw ON tw.ID=m.WINNER_ID
+    $count_sql = "SELECT COUNT(*) FROM Match_Game m
+                  JOIN Team t1 ON t1.ID=m.TEAM1_ID
+                  JOIN Team t2 ON t2.ID=m.TEAM2_ID
+                  JOIN Team tw ON tw.ID=m.WINNER_ID
                   $where_sql";
     $total = (int)db_scalar($db_conn, $count_sql);
     $total_pages = max(1, ceil($total / $per_page));
@@ -69,10 +69,10 @@ require_once 'header.php';
                 t1.SIDE AS SIDE1, t2.SIDE AS SIDE2, tw.SIDE AS WINNER,
                 CASE m.IS_RANKED WHEN 1 THEN 'Ranked' ELSE 'Normal' END AS GTYPE,
                 ROWNUM AS RN
-         FROM SYS.Match_Game m
-         JOIN SYS.Team t1 ON t1.ID=m.TEAM1_ID
-         JOIN SYS.Team t2 ON t2.ID=m.TEAM2_ID
-         JOIN SYS.Team tw ON tw.ID=m.WINNER_ID
+         FROM Match_Game m
+         JOIN Team t1 ON t1.ID=m.TEAM1_ID
+         JOIN Team t2 ON t2.ID=m.TEAM2_ID
+         JOIN Team tw ON tw.ID=m.WINNER_ID
          $where_sql
          ORDER BY m.ID DESC
        ) WHERE RN > $offset AND RN <= " . ($offset + $per_page)
@@ -86,8 +86,8 @@ require_once 'header.php';
       <div class="stat-value red"><?= $total ?></div>
     </div>
     <?php
-      $ranked_cnt = (int)db_scalar($db_conn, "SELECT COUNT(*) FROM SYS.Match_Game WHERE IS_RANKED=1");
-      $normal_cnt = (int)db_scalar($db_conn, "SELECT COUNT(*) FROM SYS.Match_Game WHERE IS_RANKED=0");
+      $ranked_cnt = (int)db_scalar($db_conn, "SELECT COUNT(*) FROM Match_Game WHERE IS_RANKED=1");
+      $normal_cnt = (int)db_scalar($db_conn, "SELECT COUNT(*) FROM Match_Game WHERE IS_RANKED=0");
     ?>
     <div class="stat-card">
       <div class="stat-label">🎖️ Ranked</div>

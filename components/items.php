@@ -38,12 +38,12 @@ require_once 'header.php';
   </div>
 
   <?php if ($db_conn):
-    $total = db_scalar($db_conn, "SELECT COUNT(*) FROM SYS.Item $search_cond");
+    $total = db_scalar($db_conn, "SELECT COUNT(*) FROM Item $search_cond");
     $total_pages = max(1, ceil($total / $per_page));
 
     $items = db_query($db_conn,
       "SELECT * FROM (
-         SELECT i.*, ROWNUM AS RN FROM SYS.Item i $search_cond ORDER BY id
+         SELECT i.*, ROWNUM AS RN FROM Item i $search_cond ORDER BY id
        ) WHERE RN > $offset AND RN <= " . ($offset + $per_page)
     );
   ?>

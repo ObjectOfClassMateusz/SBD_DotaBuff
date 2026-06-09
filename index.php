@@ -22,10 +22,10 @@ require_once 'components/header.php';
   <div class="stat-row">
     <?php
       $counts = [
-        ['label' => 'Heroes',  'sql' => 'SELECT COUNT(*) FROM SYS.Hero',       'icon' => '⚔️',  'cls' => 'red'],
-        ['label' => 'Items',   'sql' => 'SELECT COUNT(*) FROM SYS.Item',        'icon' => '🗡️', 'cls' => ''],
-        ['label' => 'Players', 'sql' => 'SELECT COUNT(*) FROM SYS.Player',      'icon' => '👤',  'cls' => 'gold'],
-        ['label' => 'Matches', 'sql' => 'SELECT COUNT(*) FROM SYS.Match_Game',  'icon' => '🏆',  'cls' => ''],
+        ['label' => 'Heroes',  'sql' => 'SELECT COUNT(*) FROM Hero',       'icon' => '⚔️',  'cls' => 'red'],
+        ['label' => 'Items',   'sql' => 'SELECT COUNT(*) FROM Item',        'icon' => '🗡️', 'cls' => ''],
+        ['label' => 'Players', 'sql' => 'SELECT COUNT(*) FROM Player',      'icon' => '👤',  'cls' => 'gold'],
+        ['label' => 'Matches', 'sql' => 'SELECT COUNT(*) FROM Match_Game',  'icon' => '🏆',  'cls' => ''],
       ];
       foreach ($counts as $c):
         $val = $db_conn ? db_scalar($db_conn, $c['sql']) : '—';
@@ -96,10 +96,10 @@ require_once 'components/header.php';
             "SELECT m.ID, TO_CHAR(m.MATCH_TIME,'YYYY-MM-DD HH24:MI') AS MATCH_DATE,
                     t1.SIDE AS SIDE1, t2.SIDE AS SIDE2, tw.SIDE AS WINNER,
                     CASE m.IS_RANKED WHEN 1 THEN 'Ranked' ELSE 'Normal' END AS GTYPE
-             FROM SYS.Match_Game m
-             JOIN SYS.Team t1 ON t1.ID = m.TEAM1_ID
-             JOIN SYS.Team t2 ON t2.ID = m.TEAM2_ID
-             JOIN SYS.Team tw ON tw.ID = m.WINNER_ID
+             FROM Match_Game m
+             JOIN Team t1 ON t1.ID = m.TEAM1_ID
+             JOIN Team t2 ON t2.ID = m.TEAM2_ID
+             JOIN Team tw ON tw.ID = m.WINNER_ID
              ORDER BY m.ID DESC
              FETCH FIRST 10 ROWS ONLY"
           );

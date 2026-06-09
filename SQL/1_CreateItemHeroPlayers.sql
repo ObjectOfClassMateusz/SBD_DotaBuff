@@ -32,8 +32,8 @@ END;
 -- ────────────────────────────────────────────────────────────
 --  SEQUENCES
 -- ────────────────────────────────────────────────────────────
-CREATE SEQUENCE seq_item_id START WITH 1 INCREMENT BY 1 NOCACHE;
-CREATE SEQUENCE seq_hero_id START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE C##app_admin.seq_item_id START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE C##app_admin.seq_hero_id START WITH 1 INCREMENT BY 1 NOCACHE;
 
 -- ────────────────────────────────────────────────────────────
 --  TABLE: ITEM

@@ -16,9 +16,9 @@ $sql = db_query($db_conn, "SELECT p.nickname,h.name AS hero, hp.position,
     hp.assists,
     ROUND(hp.kda, 2) AS kda,
     hp.netto
-FROM SYS.Hero_Played hp
-JOIN SYS.Player p ON p.steam_id  = hp.steam_id
-JOIN SYS.Hero   h ON h.id        = hp.hero_id
+FROM Hero_Played hp
+JOIN Player p ON p.steam_id  = hp.steam_id
+JOIN Hero   h ON h.id        = hp.hero_id
 ORDER BY hp.kda DESC
 FETCH FIRST 10 ROWS ONLY"); 
 echo "<h2>Top 10 Hero Played by KDA</h2>";
@@ -41,28 +41,28 @@ $sql2 = db_query($db_conn, "SELECT
     COUNT(*) AS wystapienia
 FROM (
     SELECT i1.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i1 ON i1.ID = hp.SLOT1
+    FROM Hero_Played hp
+    LEFT JOIN Item i1 ON i1.ID = hp.SLOT1
     UNION ALL
     SELECT i2.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i2 ON i2.ID = hp.SLOT2
+    FROM Hero_Played hp
+    LEFT JOIN Item i2 ON i2.ID = hp.SLOT2
     UNION ALL
     SELECT i3.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i3 ON i3.ID = hp.SLOT3
+    FROM Hero_Played hp
+    LEFT JOIN Item i3 ON i3.ID = hp.SLOT3
     UNION ALL
     SELECT i4.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i4 ON i4.ID = hp.SLOT4
+    FROM Hero_Played hp
+    LEFT JOIN Item i4 ON i4.ID = hp.SLOT4
     UNION ALL
     SELECT i5.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i5 ON i5.ID = hp.SLOT5
+    FROM Hero_Played hp
+    LEFT JOIN Item i5 ON i5.ID = hp.SLOT5
     UNION ALL
     SELECT i6.Name AS item
-    FROM SYS.Hero_Played hp
-    LEFT JOIN SYS.Item i6 ON i6.ID = hp.SLOT6
+    FROM Hero_Played hp
+    LEFT JOIN Item i6 ON i6.ID = hp.SLOT6
 ) t
 WHERE item IS NOT NULL
 GROUP BY item
@@ -89,14 +89,14 @@ $sql3 = db_query($db_conn, "SELECT
                  ELSE 0 END)
         / NULLIF(COUNT(hp.ID), 0) * 100
     , 2)                                        AS WIN_RATE_PCT
-FROM SYS.Hero h
-JOIN SYS.Hero_Played hp
+FROM Hero h
+JOIN Hero_Played hp
     ON hp.HERO_ID = h.ID
-JOIN SYS.Team t
+JOIN Team t
     ON  t.HP1 = hp.ID OR t.HP2 = hp.ID
      OR t.HP3 = hp.ID OR t.HP4 = hp.ID
      OR t.HP5 = hp.ID
-JOIN SYS.Match_Game m
+JOIN Match_Game m
     ON m.TEAM1_ID = t.ID OR m.TEAM2_ID = t.ID
 GROUP BY
     h.NAME
@@ -132,8 +132,8 @@ $sql4 = db_query($db_conn, "SELECT
         COUNT(hp.ID)
         / SUM(COUNT(hp.ID)) OVER () * 100
     , 2)                                        AS PICK_RATE_PCT
-FROM SYS.Hero h
-JOIN SYS.Hero_Played hp
+FROM Hero h
+JOIN Hero_Played hp
     ON hp.HERO_ID = h.ID
 GROUP BY
     h.ID,

@@ -28,9 +28,9 @@ END;
 -- ────────────────────────────────────────────────────────────
 --  SEQUENCES
 -- ────────────────────────────────────────────────────────────
-CREATE SEQUENCE seq_heroplayed_id START WITH 1 INCREMENT BY 1 NOCACHE;
-CREATE SEQUENCE seq_team_id       START WITH 1 INCREMENT BY 1 NOCACHE;
-CREATE SEQUENCE seq_match_id      START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE C##app_admin.seq_heroplayed_id START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE C##app_admin.seq_team_id       START WITH 1 INCREMENT BY 1 NOCACHE;
+CREATE SEQUENCE C##app_admin.seq_match_id      START WITH 1 INCREMENT BY 1 NOCACHE;
 
 
 -- ============================================================

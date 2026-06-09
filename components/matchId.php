@@ -19,10 +19,10 @@ if ($db_conn)
                 t2.ID AS T2_ID, t2.SIDE AS T2_SIDE,
                 tw.SIDE AS WINNER_SIDE,
                 CASE m.IS_RANKED WHEN 1 THEN 'Ranked' ELSE 'Normal' END AS GTYPE
-         FROM SYS.Match_Game m
-         JOIN SYS.Team t1 ON t1.ID = m.TEAM1_ID
-         JOIN SYS.Team t2 ON t2.ID = m.TEAM2_ID
-         JOIN SYS.Team tw ON tw.ID = m.WINNER_ID
+         FROM Match_Game m
+         JOIN Team t1 ON t1.ID = m.TEAM1_ID
+         JOIN Team t2 ON t2.ID = m.TEAM2_ID
+         JOIN Team tw ON tw.ID = m.WINNER_ID
          WHERE m.ID = $match_id"
     );
     $match_info = $rows[0] ?? [];
@@ -42,7 +42,7 @@ if (empty($match_info))
 function load_team_players($conn, $team_id) {
     // hp1..hp5 are Hero_Played IDs stored in Team
     $team = db_query($conn,
-        "SELECT hp1,hp2,hp3,hp4,hp5 FROM SYS.Team WHERE ID = $team_id"
+        "SELECT hp1,hp2,hp3,hp4,hp5 FROM Team WHERE ID = $team_id"
     );
     if (empty($team)) return [];
 
@@ -56,15 +56,15 @@ function load_team_players($conn, $team_id) {
             p.NICKNAME, p.RANK, p.STEAM_ID,
             i1.NAME AS ITEM1, i2.NAME AS ITEM2, i3.NAME AS ITEM3,
             i4.NAME AS ITEM4, i5.NAME AS ITEM5, i6.NAME AS ITEM6
-         FROM SYS.Hero_Played hp
-         JOIN SYS.Hero   h  ON h.ID  = hp.HERO_ID
-         JOIN SYS.Player p  ON p.STEAM_ID = hp.STEAM_ID
-         LEFT JOIN SYS.Item i1 ON i1.ID = hp.SLOT1
-         LEFT JOIN SYS.Item i2 ON i2.ID = hp.SLOT2
-         LEFT JOIN SYS.Item i3 ON i3.ID = hp.SLOT3
-         LEFT JOIN SYS.Item i4 ON i4.ID = hp.SLOT4
-         LEFT JOIN SYS.Item i5 ON i5.ID = hp.SLOT5
-         LEFT JOIN SYS.Item i6 ON i6.ID = hp.SLOT6
+         FROM Hero_Played hp
+         JOIN Hero   h  ON h.ID  = hp.HERO_ID
+         JOIN Player p  ON p.STEAM_ID = hp.STEAM_ID
+         LEFT JOIN Item i1 ON i1.ID = hp.SLOT1
+         LEFT JOIN Item i2 ON i2.ID = hp.SLOT2
+         LEFT JOIN Item i3 ON i3.ID = hp.SLOT3
+         LEFT JOIN Item i4 ON i4.ID = hp.SLOT4
+         LEFT JOIN Item i5 ON i5.ID = hp.SLOT5
+         LEFT JOIN Item i6 ON i6.ID = hp.SLOT6
          WHERE hp.ID IN ($id_list)
          ORDER BY hp.POSITION"
     );
