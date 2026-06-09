@@ -36,6 +36,9 @@ GRANT SELECT ON SEQ_HERO_ID       TO C##dota_app;
 GRANT SELECT ON SEQ_HEROPLAYED_ID TO C##dota_app;
 GRANT SELECT ON SEQ_TEAM_ID       TO C##dota_app;
 GRANT SELECT ON SEQ_MATCH_ID      TO C##dota_app;
+GRANT SELECT ON SEQ_PATCH_HERO_CHANGE_ID      TO C##dota_app;
+GRANT SELECT ON SEQ_PATCH_ITEM_CHANGE_ID      TO C##dota_app;
+GRANT SELECT ON SEQ_PATCH_ID      TO C##dota_app;
 
 -- ── 3. Weryfikacja — sprawdź czy granty są widoczne ───────
 SELECT PRIVILEGE, TABLE_NAME
