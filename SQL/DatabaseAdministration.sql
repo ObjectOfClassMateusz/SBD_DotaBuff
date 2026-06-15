@@ -182,7 +182,7 @@ AS
     EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
-        raise_application_error(-20113, 'Invalid match data!');
+        RAISE;
     END;
 
 
