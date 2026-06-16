@@ -26,17 +26,17 @@ SELECT
                  ELSE 0 END)
         / NULLIF(COUNT(hp.ID), 0) * 100
     , 2)                                        AS WIN_RATE_PCT
-FROM SYS.Hero h
+FROM Hero h
 -- każdy wybór bohatera w meczu
-JOIN SYS.Hero_Played hp
+JOIN Hero_Played hp
     ON hp.HERO_ID = h.ID
 -- drużyna do której należał ten Hero_Played
-JOIN SYS.Team t
+JOIN Team t
     ON  t.HP1 = hp.ID OR t.HP2 = hp.ID
      OR t.HP3 = hp.ID OR t.HP4 = hp.ID
      OR t.HP5 = hp.ID
 -- mecz w którym wystąpiła ta drużyna
-JOIN SYS.Match_Game m
+JOIN Match_Game m
     ON m.TEAM1_ID = t.ID OR m.TEAM2_ID = t.ID
 GROUP BY
     h.ID,
@@ -63,8 +63,8 @@ SELECT
         COUNT(hp.ID)
         / SUM(COUNT(hp.ID)) OVER () * 100
     , 2)                                        AS PICK_RATE_PCT
-FROM SYS.Hero h
-JOIN SYS.Hero_Played hp
+FROM Hero h
+JOIN Hero_Played hp
     ON hp.HERO_ID = h.ID
 GROUP BY
     h.ID,
@@ -84,7 +84,7 @@ WITH picks AS (
     SELECT
         hp.HERO_ID,
         COUNT(hp.ID)            AS ILOSC_WYBOROW
-    FROM SYS.Hero_Played hp
+    FROM Hero_Played hp
     GROUP BY hp.HERO_ID
 ),
 total_picks AS (
@@ -97,12 +97,12 @@ wins AS (
         hp.HERO_ID,
         COUNT(hp.ID)            AS MECZE_RAZEM,
         SUM(CASE WHEN t.ID = m.WINNER_ID THEN 1 ELSE 0 END) AS WYGRANE
-    FROM SYS.Hero_Played hp
-    JOIN SYS.Team t
+    FROM Hero_Played hp
+    JOIN Team t
         ON  t.HP1 = hp.ID OR t.HP2 = hp.ID
          OR t.HP3 = hp.ID OR t.HP4 = hp.ID
          OR t.HP5 = hp.ID
-    JOIN SYS.Match_Game m
+    JOIN Match_Game m
         ON m.TEAM1_ID = t.ID OR m.TEAM2_ID = t.ID
     GROUP BY hp.HERO_ID
 )
@@ -123,7 +123,7 @@ SELECT
         COALESCE(p.ILOSC_WYBOROW, 0)
         / NULLIF(tp.SUMA, 0) * 100
     , 2)                                        AS PICK_RATE_PCT
-FROM SYS.Hero h
+FROM Hero h
 LEFT JOIN picks        p  ON p.HERO_ID = h.ID
 LEFT JOIN wins         w  ON w.HERO_ID = h.ID
 CROSS JOIN total_picks tp
@@ -160,14 +160,14 @@ SELECT
                  ELSE 0 END)
         / NULLIF(COUNT(hp.ID), 0) * 100
     , 2)                                        AS WIN_RATE_PCT
-FROM SYS.Hero h
-JOIN SYS.Hero_Played hp
+FROM Hero h
+JOIN Hero_Played hp
     ON hp.HERO_ID = h.ID
-JOIN SYS.Team t
+JOIN Team t
     ON  t.HP1 = hp.ID OR t.HP2 = hp.ID
      OR t.HP3 = hp.ID OR t.HP4 = hp.ID
      OR t.HP5 = hp.ID
-JOIN SYS.Match_Game m
+JOIN Match_Game m
     ON m.TEAM1_ID = t.ID OR m.TEAM2_ID = t.ID
 GROUP BY
     h.NAME
