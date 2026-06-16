@@ -235,12 +235,6 @@ END PlayerStatistics;
 COMMIT;
 
 
-
-SELECT * FROM table(PlayerStatistics.QueryLastMatches(76561198000777002, 10, 0, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')));
-
-SELECT PlayerStatistics.PlayerWinRate(76561198000777002, (SELECT id FROM Hero WHERE name='Spectre'), 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) || '%' FROM dual;
-SELECT PlayerStatistics.PlayerWinRate(76561198000888002, (SELECT id FROM Hero WHERE name='Phantom Assassin'), 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) || '%' FROM dual;
-
 SELECT PlayerStatistics.AvgKda(76561198000888002, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) FROM dual;
 
 SELECT * FROM table(PlayerStatistics.MostFrequentlyPlayedHeros(76561198000777002, 10, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')));
@@ -248,7 +242,9 @@ SELECT * FROM table(PlayerStatistics.MostFrequentlyPlayedHeros(76561198000777002
 SELECT PlayerStatistics.NettoWorth(76561198000777002, 2) FROM dual;
 
 
+SELECT * FROM table(PlayerStatistics.QueryLastMatches(76561198000777002, 10, 0, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')));
 SELECT steam_id, nickname, PlayerStatistics.GetFavouritePosition(steam_id) FROM Player;
-
 SELECT steam_id, nickname, PlayerStatistics.GetFavouriteHero(steam_id).name FROM Player;
+SELECT PlayerStatistics.PlayerWinRate(76561198000777002, (SELECT id FROM Hero WHERE name='Spectre'), 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) || '%' FROM dual;
+SELECT PlayerStatistics.PlayerWinRate(76561198000888002, (SELECT id FROM Hero WHERE name='Phantom Assassin'), 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) || '%' FROM dual;
 

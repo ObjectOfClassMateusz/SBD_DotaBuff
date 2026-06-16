@@ -30,7 +30,6 @@ foreach ($sql as $row) {
     echo "<td>{$row['NICKNAME']}</td>";
     echo "<td>{$row['HERO']}</td>";
     echo "<td>{$row['POSITION']}</td>";
-
     echo "<td>{$row['KDA']}</td>";
     echo "</tr>";
 }
@@ -68,7 +67,6 @@ WHERE item IS NOT NULL
 GROUP BY item
 ORDER BY wystapienia DESC
 FETCH FIRST 10 ROWS ONLY");
-
 echo "<h2>Top 10 Most Used Items</h2>";
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 
@@ -80,7 +78,6 @@ foreach ($sql2 as $row) {
 }
 echo "</table>";
 /////////////////////////////////////////////
-
 
 $sql3 = db_query($db_conn, "SELECT
     h.NAME                                      AS HERO_NAME,
@@ -100,9 +97,10 @@ JOIN Match_Game m
     ON m.TEAM1_ID = t.ID OR m.TEAM2_ID = t.ID
 GROUP BY
     h.NAME
-HAVING h.NAME = 'Invoker'");
+");
 
-echo "<h2>Hero Win Rates</h2>";
+echo "<h2>Hero Win Rate</h2>";
+echo "<div style='height: 450px; overflow-y: auto;'>";
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 echo "<tr>
         <th>Hero</th>
@@ -111,7 +109,8 @@ echo "<tr>
     foreach ($sql3 as $row) 
         {
             echo "<tr>";
-            $hero_name = strtolower(htmlspecialchars($row['HERO_NAME'] ?? 'Unknown'));
+            $hero_name = strtolower($row['HERO_NAME'] ?? 'Unknown');
+             $hero_name = preg_replace("/'/", "", $hero_name);
             $hero_name = str_replace(' ', '-', $hero_name);
             echo '<td><img style="margin-right:4px; vertical-align:middle; width:100px;"
                        src="https://pl.dotabuff.com/assets/heroes/' . $hero_name . '.jpg"
@@ -120,6 +119,7 @@ echo "<tr>
             echo "</tr>";
     }
 echo "</table>";
+echo "</div>";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $sql4 = db_query($db_conn, "SELECT
@@ -143,6 +143,7 @@ ORDER BY
     PICK_RATE_PCT DESC NULLS LAST");
 
 echo "<h2>Hero Pick Rates</h2>";
+echo "<div style='height: 450px; overflow-y: auto;'>";
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 echo "<tr>
         <th>Hero</th>
@@ -160,6 +161,31 @@ echo "<tr>
             echo "</tr>";
     }
 echo "</table>";
+echo "</div>";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$sql5 = db_query($db_conn, "SELECT steam_id, nickname, PlayerStatistics.GetFavouriteHero(steam_id).name AS FAVOURITE_HERO FROM Player");
+echo "<h2>Player's Favourite Heroes</h2>";
+echo "<table border='1' cellpadding='5' cellspacing='0'>";
+echo "<tr><th>Nickname</th><th>Favourite Hero</th></tr>";
+foreach ($sql5 as $row) {
+    echo "<tr>";
+    echo "<td>{$row['NICKNAME']}</td>";
+    echo "<td>{$row['FAVOURITE_HERO']}</td>";
+    echo "</tr>";
+}
+echo "</table>";
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 require_once 'footer.php';
 ?>

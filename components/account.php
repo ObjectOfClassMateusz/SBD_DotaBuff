@@ -123,150 +123,150 @@ require_once 'header.php';
 ?>
 
 <style>
-/* ── ACCOUNT PAGE ─────────────────────────────────────── */
-.account-grid {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-@media (max-width: 820px) {
-  .account-grid { grid-template-columns: 1fr; }
-}
+    /* ── ACCOUNT PAGE ─────────────────────────────────────── */
+    .account-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .account-grid { grid-template-columns: 1fr; }
+    }
 
-/* Profile card */
-.profile-card {
-  background: var(--bg1); border: 1px solid var(--border);
-  border-top: 3px solid var(--red);
-  overflow: hidden;
-}
-.profile-avatar {
-  background: linear-gradient(135deg, var(--red-dim), var(--bg3));
-  height: 120px; display: flex; align-items: center;
-  justify-content: center; position: relative;
-}
-.profile-avatar-letter {
-  font-family: var(--font-head); font-size: 3.5rem;
-  font-weight: 900; color: rgba(255,255,255,0.15);
-  text-transform: uppercase;
-}
-.profile-avatar-icon {
-  position: absolute; font-size: 3.5rem;
-}
-.profile-body { padding: 1.4rem; }
-.profile-nick {
-  font-family: var(--font-head); font-size: 1.5rem;
-  font-weight: 700; color: #fff; letter-spacing: 0.04em;
-  margin-bottom: 0.5rem;
-}
-.profile-meta {
-  font-family: var(--font-mono); font-size: 0.75rem;
-  color: var(--text-dim); line-height: 1.8;
-}
-.profile-meta span { color: var(--text); }
-.profile-divider {
-  height: 1px; background: var(--border); margin: 1rem 0;
-}
+    /* Profile card */
+    .profile-card {
+      background: var(--bg1); border: 1px solid var(--border);
+      border-top: 3px solid var(--red);
+      overflow: hidden;
+    }
+    .profile-avatar {
+      background: linear-gradient(135deg, var(--red-dim), var(--bg3));
+      height: 120px; display: flex; align-items: center;
+      justify-content: center; position: relative;
+    }
+    .profile-avatar-letter {
+      font-family: var(--font-head); font-size: 3.5rem;
+      font-weight: 900; color: rgba(255,255,255,0.15);
+      text-transform: uppercase;
+    }
+    .profile-avatar-icon {
+      position: absolute; font-size: 3.5rem;
+    }
+    .profile-body { padding: 1.4rem; }
+    .profile-nick {
+      font-family: var(--font-head); font-size: 1.5rem;
+      font-weight: 700; color: #fff; letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .profile-meta {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-dim); line-height: 1.8;
+    }
+    .profile-meta span { color: var(--text); }
+    .profile-divider {
+      height: 1px; background: var(--border); margin: 1rem 0;
+    }
 
-/* Admin card */
-.admin-profile-card {
-  background: var(--bg1); border: 1px solid rgba(212,168,67,0.3);
-  border-top: 3px solid var(--gold); padding: 2rem;
-}
-.admin-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.3);
-  padding: 0.5rem 1rem; font-family: var(--font-mono);
-  font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em;
-  text-transform: uppercase; margin-bottom: 1rem;
-}
+    /* Admin card */
+    .admin-profile-card {
+      background: var(--bg1); border: 1px solid rgba(212,168,67,0.3);
+      border-top: 3px solid var(--gold); padding: 2rem;
+    }
+    .admin-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.3);
+      padding: 0.5rem 1rem; font-family: var(--font-mono);
+      font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
 
-/* Stat blocks */
-.stat-block {
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 1rem 1.4rem; margin-bottom: 1rem;
-}
-.stat-block-title {
-  font-family: var(--font-mono); font-size: 0.7rem;
-  color: var(--red); letter-spacing: 0.12em;
-  text-transform: uppercase; margin-bottom: 0.8rem;
-}
-.stats-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;
-}
-.stats-grid-2 {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem;
-}
-.stat-item { }
-.stat-item .val {
-  font-family: var(--font-head); font-size: 1.5rem;
-  font-weight: 700; color: #fff; line-height: 1;
-}
-.stat-item .val.red  { color: var(--red-bright); }
-.stat-item .val.gold { color: var(--gold); }
-.stat-item .val.grn  { color: #66bb6a; }
-.stat-item .lbl {
-  font-family: var(--font-mono); font-size: 0.65rem;
-  color: var(--text-muted); margin-top: 2px; letter-spacing: 0.08em;
-}
+    /* Stat blocks */
+    .stat-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      padding: 1rem 1.4rem; margin-bottom: 1rem;
+    }
+    .stat-block-title {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      color: var(--red); letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.8rem;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;
+    }
+    .stats-grid-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem;
+    }
+    .stat-item { }
+    .stat-item .val {
+      font-family: var(--font-head); font-size: 1.5rem;
+      font-weight: 700; color: #fff; line-height: 1;
+    }
+    .stat-item .val.red  { color: var(--red-bright); }
+    .stat-item .val.gold { color: var(--gold); }
+    .stat-item .val.grn  { color: #66bb6a; }
+    .stat-item .lbl {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      color: var(--text-muted); margin-top: 2px; letter-spacing: 0.08em;
+    }
 
-/* Fav hero card */
-.fav-hero-card {
-  background: linear-gradient(135deg, rgba(192,57,43,0.12), var(--bg2));
-  border: 1px solid var(--red-dim); padding: 1.2rem 1.4rem;
-  margin-bottom: 1rem;
-}
-.fav-label {
-  font-family: var(--font-mono); font-size: 0.68rem;
-  color: var(--red); letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.fav-name {
-  font-family: var(--font-head); font-size: 1.6rem;
-  font-weight: 700; color: #fff; letter-spacing: 0.04em;
-}
-.fav-attr {
-  font-family: var(--font-mono); font-size: 0.78rem;
-  color: var(--text-dim); margin-top: 0.2rem;
-}
+    /* Fav hero card */
+    .fav-hero-card {
+      background: linear-gradient(135deg, rgba(192,57,43,0.12), var(--bg2));
+      border: 1px solid var(--red-dim); padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .fav-label {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      color: var(--red); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .fav-name {
+      font-family: var(--font-head); font-size: 1.6rem;
+      font-weight: 700; color: #fff; letter-spacing: 0.04em;
+    }
+    .fav-attr {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--text-dim); margin-top: 0.2rem;
+    }
 
-/* Match history */
-.match-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 1fr 80px 80px 90px;
-  gap: 0.5rem; align-items: center;
-  padding: 0.6rem 1rem;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.12s;
-}
-.match-row:hover { background: var(--bg2); }
-.match-row:last-child { border-bottom: none; }
-.match-result {
-  font-family: var(--font-head); font-size: 0.9rem;
-  font-weight: 700; letter-spacing: 0.06em; text-align: center;
-  padding: 3px 0;
-}
-.match-result.WIN  { color: #66bb6a; }
-.match-result.LOSS { color: var(--red-bright); }
+    /* Match history */
+    .match-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr 80px 80px 90px;
+      gap: 0.5rem; align-items: center;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .match-row:hover { background: var(--bg2); }
+    .match-row:last-child { border-bottom: none; }
+    .match-result {
+      font-family: var(--font-head); font-size: 0.9rem;
+      font-weight: 700; letter-spacing: 0.06em; text-align: center;
+      padding: 3px 0;
+    }
+    .match-result.WIN  { color: #66bb6a; }
+    .match-result.LOSS { color: var(--red-bright); }
 
-.logout-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text-muted); font-family: var(--font-head);
-  font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
-  text-transform: uppercase; padding: 0.45rem 1.2rem;
-  cursor: pointer; text-decoration: none;
-  transition: all 0.18s; margin-top: 1rem;
-  display: block; text-align: center;
-}
-.logout-btn:hover { border-color: var(--red); color: var(--red-bright); }
+    .logout-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); font-family: var(--font-head);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.45rem 1.2rem;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.18s; margin-top: 1rem;
+      display: block; text-align: center;
+    }
+    .logout-btn:hover { border-color: var(--red); color: var(--red-bright); }
 
-/* Welcome banner */
-.welcome-flash {
-  background: rgba(76,175,80,0.1); border-left: 4px solid #4caf50;
-  padding: 0.8rem 1.2rem; margin-bottom: 1.5rem;
-  font-family: var(--font-mono); font-size: 0.85rem; color: #a5d6a7;
-}
+    /* Welcome banner */
+    .welcome-flash {
+      background: rgba(76,175,80,0.1); border-left: 4px solid #4caf50;
+      padding: 0.8rem 1.2rem; margin-bottom: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.85rem; color: #a5d6a7;
+    }
 </style>
 
 <div class="page-wrap">
@@ -321,7 +321,6 @@ require_once 'header.php';
   <?php else: ?>
   <!-- PLAYER VIEW -->
   <div class="page-banner" data-label="ACCOUNT" style="margin-bottom:1.5rem;">
-    <div class="banner-tag">// Profil gracza</div>
     <h1 class="banner-title">Twoje <span>Konto</span></h1>
     <div class="banner-divider"></div>
   </div>
@@ -507,7 +506,54 @@ require_once 'header.php';
 
     </div><!-- /right col -->
   </div><!-- /account-grid -->
+  <br/>
+  <hr style="border-color:var(--border); margin:2rem 0;">
+  <?php 
+      $user_sql1 = db_query($db_conn, 
+        "SELECT * 
+        FROM table(
+            PlayerStatistics.QueryLastMatches(" . $player['STEAM_ID'] . ", 10, 0, 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05'))
+            )");
 
+            echo "<h2>Ostatnie mecze (procedura)</h2>";
+            echo "<p> 10 ostatnich nierankingowych meczów gracza (procedura PlayerStatistics.QueryLastMatches)</p>";
+
+        echo "<table border='1' cellpadding='5' cellspacing='0'>";
+        echo "<tr>
+                <th>ID</th>
+            </tr>";
+        foreach ($user_sql1 as $row) 
+        {
+            echo "<tr>";
+            echo "<td>{$row['ID']}</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+        echo "<br/><hr style='border-color:var(--border); margin:2rem 0;'>";
+        //////////////////////////////////////////////////////////////////////////////////
+        $user_sql2 = db_query($db_conn,"SELECT 
+(PlayerStatistics.PlayerWinRate(".$player['STEAM_ID'].", (SELECT id FROM Hero WHERE name=(SELECT PlayerStatistics.GetFavouriteHero(".$player['STEAM_ID'].").name AS Fav FROM DUAL)), 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) || '%' ) AS UWU
+FROM dual");
+echo "<h2>Winrate gracza z ulubionym bohaterem (funkcja) w okresie: 2005-2027 </h2>";
+$user_sql2_1 = db_query($db_conn,"SELECT PlayerStatistics.GetFavouriteHero(".$player['STEAM_ID'].").name AS Fav FROM DUAL");
+print_r($user_sql2_1[0]['FAV']);
+        print_r($user_sql2[0]['UWU']);
+                echo "<br/><hr style='border-color:var(--border); margin:2rem 0;'>";
+        //////////////////////////////////////////////////////////////////////////////////
+        $user_sql3 = db_query($db_conn,"SELECT steam_id, nickname, PlayerStatistics.GetFavouritePosition(steam_id) AS FAV FROM Player WHERE steam_id = " . $player['STEAM_ID']);
+        echo "<h2>Favourite position gracza (funkcja)</h2>";
+        print_r($user_sql3[0]['FAV']);
+        echo "<br/><hr style='border-color:var(--border); margin:2rem 0;'>";
+        //////////////////////////////////////////////////////////////////////////////////
+        $user_sql4 = db_query($db_conn,"SELECT PlayerStatistics.AvgKda(".$player['STEAM_ID'].", 0, TO_DATE('2005-05-05'), TO_DATE('2027-05-05')) AS KDA FROM dual");
+        echo "<h2>Średnie KDA gracza (funkcja) w okresie: 2005-2027 </h2>";
+        print_r($user_sql4[0]['KDA']);
+                echo "<br/><hr style='border-color:var(--border); margin:2rem 0;'>";
+        //////////////////////////////////////////////////////////////////////////////////
+                echo "<br/><hr style='border-color:var(--border); margin:2rem 0;'>";
+        //////////////////////////////////////////////////////////////////////////////////
+
+  ?>
   <?php endif; ?>
 </div>
 

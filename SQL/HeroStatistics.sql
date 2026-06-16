@@ -362,7 +362,7 @@ END HeroStatistics;
 
 
 COMMIT;
-
+-----------------------TESTY
 
 SELECT * FROM table(HeroStatistics.RankByWinRate('Immortal', NULL, 'Agility', TO_DATE('2005-05-05'), TO_DATE('2027-05-05')));
 

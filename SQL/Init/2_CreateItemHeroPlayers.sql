@@ -39,7 +39,7 @@ CREATE SEQUENCE C##app_admin.seq_hero_id START WITH 1 INCREMENT BY 1 NOCACHE;
 --  TABLE: ITEM
 -- ────────────────────────────────────────────────────────────
 CREATE TABLE Item (
-    id    NUMBER        DEFAULT seq_item_id.NEXTVAL CONSTRAINT pk_item PRIMARY KEY,
+    id    NUMBER        DEFAULT C##app_admin.seq_item_id.NEXTVAL CONSTRAINT pk_item PRIMARY KEY,
     name  VARCHAR2(100) CONSTRAINT nn_item_name NOT NULL,
                         CONSTRAINT uq_item_name UNIQUE (name)
 );
@@ -48,7 +48,7 @@ CREATE TABLE Item (
 --  TABLE: HERO
 -- ────────────────────────────────────────────────────────────
 CREATE TABLE Hero (
-    id                NUMBER        DEFAULT seq_hero_id.NEXTVAL CONSTRAINT pk_hero PRIMARY KEY,
+    id                NUMBER        DEFAULT C##app_admin.seq_hero_id.NEXTVAL CONSTRAINT pk_hero PRIMARY KEY,
     name              VARCHAR2(100) CONSTRAINT nn_hero_name NOT NULL,
                                     CONSTRAINT uq_hero_name UNIQUE (name),
     primary_attribute VARCHAR2(15)  CONSTRAINT nn_hero_attr NOT NULL,
