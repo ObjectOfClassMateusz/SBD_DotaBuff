@@ -444,7 +444,7 @@ DECLARE
     v_dazzleId Hero.id%TYPE;
     v_bloodstoneId Item.id%TYPE;
 BEGIN
-    DatabaseAdministration.NewPatch('7.42', TO_DATE('2026-06-20'));
+    DatabaseAdministration.NewPatch('7.43', TO_DATE('2026-06-26'));
     
     DatabaseAdministration.AddNewHero('Michael', 'Intelligence');
     
@@ -461,8 +461,8 @@ BEGIN
     WHERE name='Bane';
     
     UPDATE Item
-    SET name='Manta Styles'
-    WHERE name='Manta Style';
+    SET name='Manta Style'
+    WHERE name='Manta Styles';
 END;
 /
 
